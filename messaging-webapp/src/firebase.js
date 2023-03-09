@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 
 
 const firebaseConfig = {
-  apiKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "XXXXXXXXXXXXXXXXXXXXXXXX",
   projectId: "XXXXXXXXX",
   storageBucket: "XXXXXXXXXXXXXXXXXX",
