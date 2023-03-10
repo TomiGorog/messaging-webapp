@@ -1,30 +1,48 @@
 import React from 'react'
+import { useForm } from '../hooks/useForm'
 
 const Signin = () => {
- 
-    return (
-      <div className="container-auth">
-          <h2>Login</h2>
 
-          <form>
-              <input
-                  name="email"
-                  type="email"
-                  placeholder="E-mail"
-              />
-              <input
-                  name="pass"
-                  type="password"
-                  placeholder="Password"
-              />
+const { handleChange, pass, email } = useForm({
+  initialState: {
+    email: '',
+    pass: ''
+  }
+})
 
-              <div className="container-buttons">
-                  <button type="submit">Log In</button>
-                  <button type="button"> Google </button>
-              </div>
-          </form>
-      </div>
-  
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
+}
+
+
+
+  return (
+    <div className="container-auth">
+      <h2>Login</h2>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          name="email"
+          type="email"
+          placeholder="E-mail"
+          onChange={handleChange}
+          value={email}
+        />
+        <input
+          name="pass"
+          type="password"
+          placeholder="Password"
+          onChange={handleChange}
+          value={pass}
+        />
+
+        <div className="container-buttons">
+          <button type="submit">Log In</button>
+          <button type="button"> Google </button>
+        </div>
+      </form>
+    </div>
+
   )
 }
 
