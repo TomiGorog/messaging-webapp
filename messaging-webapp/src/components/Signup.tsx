@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../contexts/authContext'
 import { useForm } from '../hooks/useForm'
 
 const Signup = () => {
+    const { handleRegisterWithCredentials } = useContext(AuthContext)
 
   const { handleChange, pass, email } = useForm({
     initialState: {
@@ -12,6 +14,7 @@ const Signup = () => {
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    handleRegisterWithCredentials(pass, email)
 }
   return (
       <div className="container-auth">

@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../contexts/authContext'
 import { useForm } from '../hooks/useForm'
+
 const Signin = () => {
 
-const { handleChange, pass, email } = useForm({
-  initialState: {
-    email: '',
-    pass: ''
-  }
-})
+  const { handleLoginWithGoogle, handleLoginWithCredentials } = useContext(AuthContext)
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault()
-}
+  const { handleChange, pass, email } = useForm({
+    initialState: {
+      email: '',
+      pass: ''
+    }
+  })
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
 
 
   return (
@@ -35,7 +39,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
         <div className="container-buttons">
           <button type="submit">Log In</button>
-          <button type="button"> Google </button>
+          <button type="button" onClick={handleLoginWithGoogle}> Google </button>
         </div>
       </form>
     </div>

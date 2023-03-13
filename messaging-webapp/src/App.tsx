@@ -1,17 +1,23 @@
 import 'firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore' ;
-import Signin from './components/Signin';
-import Signup from './components/Signup';
+import { useContext } from 'react';
+import { AuthPage } from './components/Auth';
+import { HomePage } from './components/Home';
+
+import { AuthContext } from './contexts/authContext';
 
 
 function App() {
 
+  const { status, userId } = useContext(AuthContext)
+
+  if (status === 'checking') return <p className="loading"><span>Checking credentials, wait a moment...</span></p>
   return (
     <>
-   <h1>Start</h1>
-   <Signin />
-   <Signup />
+  {
+            (status === 'authenticated' && userId)
+                ? <HomePage />
+                : <AuthPage />
+        }
     </>
   )
 }
