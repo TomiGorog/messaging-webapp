@@ -1,10 +1,9 @@
 import { createContext, useEffect, useState } from "react"
-import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signInWithCredentials, singInWithGoogle } from "../services/authservice"
+import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signInWithCredentials } from "../services/authservice"
 
 export interface AuthStateContext {
     userId: string | null
     status: 'checking' | 'authenticated' | 'no-authenticated'
-    handleLoginWithGoogle: () => Promise<void>
     handleLoginWithCredentials: (password: string, email: string) => Promise<void>
     handleRegisterWithCredentials: (password: string, email: string) => Promise<void>
     handleLogOut: () => Promise<void>
@@ -33,7 +32,7 @@ export const AuthProvider = ({ children }: IElement) => {
         setSession({ userId: null, status: 'no-authenticated' })
     }
 
-    const validateAuth = (userId: string | undefined) => {
+    const validateAuth = (userId: string | undefined | void): void => {
         if (userId) return setSession({ userId, status: 'authenticated' })
         handleLogOut()
     }
@@ -41,12 +40,6 @@ export const AuthProvider = ({ children }: IElement) => {
     const checking = () => setSession(prev => ({ ...prev, status: 'checking' }))
 
 
-
-    const handleLoginWithGoogle = async () => {
-        checking()
-        const userId = await singInWithGoogle()
-        validateAuth(userId)
-    }
 
     const handleLoginWithCredentials = async (password: string, email: string) => {
         checking()
@@ -63,7 +56,6 @@ export const AuthProvider = ({ children }: IElement) => {
     return (
         <AuthContext.Provider value={{
             ...session,
-            handleLoginWithGoogle,
             handleLoginWithCredentials,
             handleRegisterWithCredentials,
             handleLogOut
