@@ -1,6 +1,5 @@
 import React from 'react'
 import { useForm } from '../hooks/useForm'
-
 const Signin = () => {
 
 const { handleChange, pass, email } = useForm({
@@ -15,11 +14,9 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 }
 
 
-
   return (
     <div className="container-auth">
       <h2>Login</h2>
-
       <form onSubmit={handleSubmit}>
         <input
           name="email"
