@@ -1,25 +1,17 @@
 import { useEffect, useState } from 'react'
+import { fetchCategoryData } from '../services/fetchService';
+import NewsCategory from './NewsCategory';
 
 const NewsHome = () => {
 
     const [news, setNews] = useState<any>(null);
-    useEffect(() => {
-        fetch(`https://content.guardianapis.com/tags?q=Tech&api-key=${import.meta.env.VITE_GUARDIAN_API_KEY}`).then(response => response.json())
-            .then(data => {
-                return setNews(data.response)
-            })
-        console.log(news)
-    }, [])
-    return (
+    
+        return (
         <div>NewsHome
-            {news && 
-            <ul>
-                {news.results.map((story: any) => {
-                    return <li key={story.id}>{story.id}</li>
+            <NewsCategory category='technology'/>
+            
+            
 
-                })}
-            </ul>
-}
         </div>
     )
 }
