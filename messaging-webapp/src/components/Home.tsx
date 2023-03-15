@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { AuthContext } from "../contexts/authContext"
 import NewsHome from "./NewsHome"
+import SavedArticles from "./SavedArticles"
 
 export const HomePage = () => {
   const { userId, handleLogOut } = useContext(AuthContext)
@@ -10,6 +11,7 @@ export const HomePage = () => {
       <h5>Your ID is: <span>{userId}</span></h5>
       <button onClick={handleLogOut}>Log out</button>
       <NewsHome />
+      <SavedArticles />
     </section>
   )
 }
