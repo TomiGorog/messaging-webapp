@@ -1,5 +1,5 @@
-import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../firebase/config'
+import { ref, set } from 'firebase/database'
+import { database } from '../firebase/config'
 
 type Props = {
     link: string,
@@ -11,15 +11,12 @@ const StoryCard = ({title, link, image}: Props) => {
     title, link, image
   }
   const saveArticle = async () => {
-    console.log(saveInfo, "asd")
-    try {
-      const docRef = await addDoc(collection(db, "articlelist"), {
-        story: saveInfo,    
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
+  
+    // set(ref(database, 'users/' + userId), {
+    //   username: name,
+    //   email: email,
+    //   profile_picture : imageUrl
+    // });
   }
 
   return (
