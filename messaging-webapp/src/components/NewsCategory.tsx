@@ -9,7 +9,6 @@ const NewsCategory = ({ category }: Props) => {
     useEffect(() => {
         fetchCategoryData("technology", setNews)
     }, [])
-    console.log(news)
     return (
         <div>{category} news
             {news &&

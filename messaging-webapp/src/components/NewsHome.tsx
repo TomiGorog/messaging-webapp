@@ -1,17 +1,10 @@
-import { useEffect, useState } from 'react'
-import { fetchCategoryData } from '../services/fetchService';
 import NewsCategory from './NewsCategory';
 
-const NewsHome = () => {
-
-    const [news, setNews] = useState<any>(null);
-    
+const NewsHome = () => {    
         return (
         <div>NewsHome
             <NewsCategory category='technology'/>
-            
-            
-
+            <NewsCategory category='finance'/>
         </div>
     )
 }

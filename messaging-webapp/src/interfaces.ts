@@ -1,6 +1,7 @@
-export interface saveArticleStructure {
+export interface savedArticleStructure {
     title: string,
     link: string,
-    image?: string,
-    userId: string | null
+    image?: string | undefined,
+    userId?: string | null
+    articleId?: string
 }
