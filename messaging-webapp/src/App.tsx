@@ -20,7 +20,7 @@ function App() {
 
         <Route path="/" element={status === 'authenticated' && userId ? <NewsHome /> : <AuthPage />} />
         <Route element={<ProtectedRoutes />} >
-          <Route path="/news" element={<NewsHome />} />
+          <Route path="/home" element={<NewsHome />} />
           <Route path="/saved" element={<SavedArticles />} />
         </Route>
       </Routes>

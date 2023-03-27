@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/authContext'
 import { useForm } from '../hooks/useForm'
 
 const Signin = () => {
 
-  const {  handleLoginWithCredentials } = useContext(AuthContext)
-
+  const { handleLoginWithCredentials } = useContext(AuthContext)
+  const navigate = useNavigate()
   const { handleChange, pass, email } = useForm({
     initialState: {
       email: '',
@@ -15,7 +16,9 @@ const Signin = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    handleLoginWithCredentials(pass, email)
+    handleLoginWithCredentials(pass, email).then(res => {
+      res ? navigate('/home') : navigate('/')
+    })
   }
 
 
@@ -40,7 +43,7 @@ const Signin = () => {
 
         <div className="container-buttons">
           <button type="submit">Log In</button>
-          
+
         </div>
       </form>
     </div>

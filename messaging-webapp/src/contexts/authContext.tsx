@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signInWithCredentials } from "../services/authservice"
 
 export interface AuthStateContext {
     userId: string | null
     status: 'checking' | 'authenticated' | 'no-authenticated'
-    handleLoginWithCredentials: (password: string, email: string) => Promise<void>
-    handleRegisterWithCredentials: (password: string, email: string) => Promise<void>
+    handleLoginWithCredentials: (password: string, email: string) => Promise<boolean>
+    handleRegisterWithCredentials: (password: string, email: string) => Promise<boolean>
     handleLogOut: () => Promise<void>
 }
 
@@ -20,7 +21,7 @@ interface IElement { children: JSX.Element | JSX.Element[] }
 
 export const AuthProvider = ({ children }: IElement) => {
     const [session, setSession] = useState(initialState)
-
+    // const navigate = useNavigate()
     useEffect(() => {
         onAuthStateHasChanged(setSession)
     }, [])
@@ -32,25 +33,32 @@ export const AuthProvider = ({ children }: IElement) => {
         setSession({ userId: null, status: 'no-authenticated' })
     }
 
-    const validateAuth = (userId: string | undefined | void): void => {
-        if (userId) return setSession({ userId, status: 'authenticated' })
-        handleLogOut()
+    const validateAuth = (userId: string | undefined | void): boolean => {
+        if (userId) {
+            setSession({ userId, status: 'authenticated' })
+            return true
+        }
+        else {
+            setSession({ status: 'no-authenticated', userId: null })
+            handleLogOut()
+            return false
+        }
     }
 
     const checking = () => setSession(prev => ({ ...prev, status: 'checking' }))
 
 
 
-    const handleLoginWithCredentials = async (password: string, email: string) => {
+    const handleLoginWithCredentials = async (password: string, email: string): Promise<boolean> => {
         checking()
         const userId = await loginWithCredentials({ email, password })
-        validateAuth(userId)
+        return validateAuth(userId)
     }
 
-    const handleRegisterWithCredentials = async (password: string, email: string) => {
+    const handleRegisterWithCredentials = async (password: string, email: string): Promise<boolean> => {
         checking()
         const userId = await signInWithCredentials({ email, password })
-        validateAuth(userId)
+        return validateAuth(userId)
     }
 
     return (
