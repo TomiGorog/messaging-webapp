@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signInWithCredentials } from "../services/authservice"
+import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signUpWithCredentials } from "../services/authservice"
 
 export interface AuthStateContext {
     userId: string | null
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: IElement) => {
 
     const handleRegisterWithCredentials = async (password: string, email: string): Promise<boolean> => {
         checking()
-        const userId = await signInWithCredentials({ email, password })
+        const userId = await signUpWithCredentials({ email, password })
         return validateAuth(userId)
     }
 
