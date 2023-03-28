@@ -20,6 +20,14 @@ export const saveArticle = async ({ title, link, image, userId }: savedArticleSt
     });
 }
 
+export const saveWithRedux = async ({ title, link, image, userId }: any) => {
+    const articleID = UUID.genV4();
+    await set(ref(database, `users/${userId}/savedArticles/${articleID}`), {
+        title: title,
+        link: link,
+        image: image
+    });
+}
 export const fetchSavedArticles = async (userId: string | null) => {
 
     // const newsRef = ref(database, `users/${userId}/savedArticles/`)
@@ -41,9 +49,9 @@ export const fetchSavedArticles = async (userId: string | null) => {
 }
 
 export const deleteFromSavedArticles = async ({ title, link, image, userId, articleId }: savedArticleStructure) => {
-return await fetch(`${import.meta.env.VITE_DATABASEURL}/users/${userId}/savedArticles/${articleId}.json`, {
-    method: "DELETE"
-}).then(resp => {
-    console.log(resp)
-})
+    return await fetch(`${import.meta.env.VITE_DATABASEURL}/users/${userId}/savedArticles/${articleId}.json`, {
+        method: "DELETE"
+    }).then(resp => {
+        console.log(resp)
+    })
 }
