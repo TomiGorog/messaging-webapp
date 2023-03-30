@@ -32,7 +32,6 @@ type StateDispatch = any
 
 export const onAuthStateHasChanged = (setSession: StateDispatch) => {
     onAuthStateChanged(FirebaseAuth, user => {
-        console.log(user)
         if (!user) return setSession({ status: 'no-authenticated', userId: null })
 
         setSession({ status: 'authenticated', userId: user!.uid })

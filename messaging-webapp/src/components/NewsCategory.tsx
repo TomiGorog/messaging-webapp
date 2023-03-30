@@ -13,8 +13,8 @@ const NewsCategory = ({ category }: Props) => {
         <div>{category} news
             {news &&
                 <ul >
-                    {news.results.map((story: any) => {
-                        return <StoryCard title={story.title} link={story.link} image={story.image_url} ></StoryCard>
+                    {news.results.map((story: any, index: number) => {
+                        return <StoryCard key={index} title={story.title} link={story.link} image={story.image_url} ></StoryCard>
 
                     })}
                 </ul>

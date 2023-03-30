@@ -9,9 +9,10 @@ const SavedArticles = () => {
 
   const [articles, setArticles] = useState<savedArticleStructure[]>([])
   useEffect(() => {
-    fetchSavedArticles(userId)
-      .then((actualData) => setArticles(actualData));
-    console.log(articles)
+    console.log("fetched again")
+    // fetchSavedArticles(userId)
+    //   .then((actualData) => setArticles(actualData));
+    // console.log(articles)
   }, [savedArticles])
   return (
     <div>SavedArticles:

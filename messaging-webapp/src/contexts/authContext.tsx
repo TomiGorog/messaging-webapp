@@ -5,6 +5,7 @@ import { savedArticleCorrect, savedArticleStructure } from "../interfaces"
 import { set, ref } from "firebase/database"
 import { UUID } from "uuidjs"
 import { database } from "../firebase/config"
+import { fetchSavedArticles } from "../services/fetchService"
 export interface AuthStateContext {
     userId: string | null
     status: 'checking' | 'authenticated' | 'no-authenticated'
@@ -21,7 +22,7 @@ const initialState: Pick<AuthStateContext, 'status' | 'userId'> = {
 }
 
 
-const savedArticles: savedArticleCorrect[] = []
+const savedArticlesInitial: savedArticleCorrect[] = []
 
 export const AuthContext = createContext({} as AuthStateContext)
 
@@ -29,9 +30,23 @@ interface IElement { children: JSX.Element | JSX.Element[] }
 
 export const AuthProvider = ({ children }: IElement) => {
     const [session, setSession] = useState(initialState)
+    const [savedArticles, setSavedArticles] = useState(savedArticlesInitial)
     // const navigate = useNavigate()
     useEffect(() => {
+
         onAuthStateHasChanged(setSession)
+        fetch(`${import.meta.env.VITE_DATABASEURL}/users/${initialState.userId}/savedArticles.json`)
+            .then(resp => resp.json())
+            .then(articles => {
+                console.log(articles)
+                let articleArray: savedArticleStructure[] = []
+                articles && Object.keys(articles).forEach((article: string) => {
+                    console.log(articles[article])
+                    articleArray.push({ articleId: article, ...articles[article] })
+                });
+                console.log(articleArray, "articleArray")
+                return articleArray
+            })
     }, [])
 
 
