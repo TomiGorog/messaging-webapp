@@ -6,9 +6,9 @@ type Props = {
 }
 const NewsCategory = ({ category }: Props) => {
     const [news, setNews] = useState<any>(null);
-    useEffect(() => {
-        fetchCategoryData("technology", setNews)
-    }, [])
+    // useEffect(() => {
+    //     fetchCategoryData("technology", setNews)
+    // }, [])
     return (
         <div>{category} news
             {news &&

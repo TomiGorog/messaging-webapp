@@ -13,7 +13,7 @@ export interface AuthStateContext {
     handleRegisterWithCredentials: (password: string, email: string) => Promise<boolean>
     handleLogOut: () => Promise<void>
     savedArticles: savedArticleCorrect[],
-    saveArticleContext: (article: savedArticleStructure) => Promise<void>
+    saveArticle: (article: savedArticleStructure) => Promise<void>
 }
 
 const initialState: Pick<AuthStateContext, 'status' | 'userId'> = {
@@ -31,23 +31,26 @@ interface IElement { children: JSX.Element | JSX.Element[] }
 export const AuthProvider = ({ children }: IElement) => {
     const [session, setSession] = useState(initialState)
     const [savedArticles, setSavedArticles] = useState(savedArticlesInitial)
-    // const navigate = useNavigate()
-    useEffect(() => {
+    const [loggedIn, setLoggedIn] = useState(false)
 
-        onAuthStateHasChanged(setSession)
-        fetch(`${import.meta.env.VITE_DATABASEURL}/users/${initialState.userId}/savedArticles.json`)
-            .then(resp => resp.json())
-            .then(articles => {
-                console.log(articles)
-                let articleArray: savedArticleStructure[] = []
-                articles && Object.keys(articles).forEach((article: string) => {
-                    console.log(articles[article])
-                    articleArray.push({ articleId: article, ...articles[article] })
-                });
-                console.log(articleArray, "articleArray")
-                return articleArray
-            })
-    }, [])
+    useEffect(() => {
+        console.log("useEffect");
+        (async () => {
+            await onAuthStateHasChanged(setSession, setLoggedIn)
+            fetch(`${import.meta.env.VITE_DATABASEURL}/users/${session.userId}/savedArticles.json`)
+                .then(resp => resp.json())
+                .then(articles => {
+                    let articleArray: savedArticleCorrect[] = []
+                    articles && Object.keys(articles).forEach((article: string) => {
+                        articleArray.push({ [article]: { ...articles[article] } })
+                    });
+                    console.log(articleArray, "articleArray")
+                    setSavedArticles(articleArray)
+                })
+        })()
+
+        return () => { }
+    }, [loggedIn])
 
 
 
@@ -84,10 +87,12 @@ export const AuthProvider = ({ children }: IElement) => {
         return validateAuth(userId)
     }
 
-    const saveArticleContext = async ({ title, link, image, userId }: savedArticleStructure) => {
+    const saveArticle = async ({ title, link, image, }: savedArticleStructure) => {
+
         let articleID = UUID.genV4();
+        let aId = articleID.hexNoDelim
         savedArticles.push({
-            articleID: {
+            [aId]: {
                 title: title,
                 link: link,
                 image: image
@@ -95,11 +100,13 @@ export const AuthProvider = ({ children }: IElement) => {
         }
         )
         console.log(savedArticles)
-        await set(ref(database, `users/${userId}/savedArticles/${articleID}`), {
+        return await set(ref(database, `users/${session.userId}/savedArticles/${articleID}`), {
             title: title,
             link: link,
             image: image
         })
+
+
 
 
     }
@@ -110,7 +117,7 @@ export const AuthProvider = ({ children }: IElement) => {
             handleRegisterWithCredentials,
             handleLogOut,
             savedArticles,
-            saveArticleContext,
+            saveArticle,
         }}>
             {children}
         </AuthContext.Provider>

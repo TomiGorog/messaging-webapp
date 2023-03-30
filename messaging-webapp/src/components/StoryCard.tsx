@@ -1,23 +1,30 @@
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { AuthContext } from '../contexts/authContext'
-import { saveArticle } from '../services/fetchService';
 
-type Props = {
-  link: string,
-  title: string,
-  image: string
+type StoryCardProps = {
+    title: string,
+    link: string,
+    image: string | undefined | null
 }
-const StoryCard = ({ title, link, image }: Props) => {
-  const { userId, saveArticleContext } = useContext(AuthContext)
+const StoryCard = ({ title, link, image }: StoryCardProps) => {
 
-  return (
-    <div>
-      <h3>{title}</h3>
-      <img src={image}></img>
-      <a href={link} target="_blank" >Read full story</a>
-      <button onClick={() => saveArticleContext({ title, link, image, userId })}>Save for later</button>
-    </div>
-  )
+    const { saveArticle } = useContext(AuthContext)
+    return (
+        <>
+            <div>
+
+                {image && <img src={image} alt={title} />}
+                <h3>{title}</h3>
+                <a href={link} target="_blank" rel="noopener noreferrer">{link}</a>
+                <button onClick={() => saveArticle({ title, link, image })}>Save</button>
+            </div>
+
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+        </>
+    )
 }
 
 export default StoryCard

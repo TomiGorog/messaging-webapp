@@ -1,6 +1,7 @@
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
 import { FirebaseAuth } from '../firebase/config'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { async } from 'rxjs';
 
 interface PropsRegister { email: string, password: string }
 
@@ -30,11 +31,16 @@ export const loginWithCredentials = async ({ email, password }: PropsRegister) =
 // type StateDispatch = React.Dispatch<React.SetStateAction<Pick<AuthStateContext, "status" | "userId">>>
 type StateDispatch = any
 
-export const onAuthStateHasChanged = (setSession: StateDispatch) => {
+export const onAuthStateHasChanged = async (setSession: StateDispatch, setLoggedIn: StateDispatch) => {
     onAuthStateChanged(FirebaseAuth, user => {
-        if (!user) return setSession({ status: 'no-authenticated', userId: null })
+        if (!user) {
+            setLoggedIn(false)
+            return setSession({ status: 'no-authenticated', userId: null })
+        }
 
         setSession({ status: 'authenticated', userId: user!.uid })
+        setLoggedIn(true)
+        console.log(user, "authenticated")
 
     })
 }

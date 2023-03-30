@@ -1,12 +1,12 @@
 import NewsCategory from './NewsCategory';
-import SavedArticles from './SavedArticles';
+import SavedNews from './SavedNews';
 
 const NewsHome = () => {
     return (
         <div>NewsHome
-            <NewsCategory category='technology' />
-            <NewsCategory category='finance' />
-            <SavedArticles />
+            {/* <NewsCategory category='technology' /> */}
+            {/* <NewsCategory category='finance' /> */}
+            <SavedNews />
         </div>
     )
 }

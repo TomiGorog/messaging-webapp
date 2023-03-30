@@ -1,11 +1,9 @@
 import 'firebase/firestore';
 import { useContext } from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthPage } from './components/Auth';
 import NewsHome from './components/NewsHome';
 import ProtectedRoutes from './components/ProtectedRoutes';
-import SavedArticles from './components/SavedArticles';
 import { AuthContext } from './contexts/authContext';
 
 
@@ -21,7 +19,7 @@ function App() {
         <Route path="/" element={status === 'authenticated' && userId ? <NewsHome /> : <AuthPage />} />
         <Route element={<ProtectedRoutes />} >
           <Route path="/home" element={<NewsHome />} />
-          <Route path="/saved" element={<SavedArticles />} />
+          {/* <Route path="/saved" element={<SavedArticles />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
