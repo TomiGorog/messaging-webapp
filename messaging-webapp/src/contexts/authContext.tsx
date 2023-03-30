@@ -1,19 +1,27 @@
 import { createContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signUpWithCredentials } from "../services/authservice"
-
+import { savedArticleCorrect, savedArticleStructure } from "../interfaces"
+import { set, ref } from "firebase/database"
+import { UUID } from "uuidjs"
+import { database } from "../firebase/config"
 export interface AuthStateContext {
     userId: string | null
     status: 'checking' | 'authenticated' | 'no-authenticated'
     handleLoginWithCredentials: (password: string, email: string) => Promise<boolean>
     handleRegisterWithCredentials: (password: string, email: string) => Promise<boolean>
     handleLogOut: () => Promise<void>
+    savedArticles: savedArticleCorrect[],
+    saveArticleContext: (article: savedArticleStructure) => Promise<void>
 }
 
 const initialState: Pick<AuthStateContext, 'status' | 'userId'> = {
     status: 'checking',
     userId: null
 }
+
+
+const savedArticles: savedArticleCorrect[] = []
 
 export const AuthContext = createContext({} as AuthStateContext)
 
@@ -61,12 +69,33 @@ export const AuthProvider = ({ children }: IElement) => {
         return validateAuth(userId)
     }
 
+    const saveArticleContext = async ({ title, link, image, userId }: savedArticleStructure) => {
+        let articleID = UUID.genV4();
+        savedArticles.push({
+            articleID: {
+                title: title,
+                link: link,
+                image: image
+            }
+        }
+        )
+        console.log(savedArticles)
+        await set(ref(database, `users/${userId}/savedArticles/${articleID}`), {
+            title: title,
+            link: link,
+            image: image
+        })
+
+
+    }
     return (
         <AuthContext.Provider value={{
             ...session,
             handleLoginWithCredentials,
             handleRegisterWithCredentials,
-            handleLogOut
+            handleLogOut,
+            savedArticles,
+            saveArticleContext,
         }}>
             {children}
         </AuthContext.Provider>
