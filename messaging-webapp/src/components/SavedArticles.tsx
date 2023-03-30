@@ -5,14 +5,14 @@ import { fetchSavedArticles } from '../services/fetchService'
 import SavedArticleCard from './SavedArticleCard'
 
 const SavedArticles = () => {
-  const { userId } = useContext(AuthContext)
+  const { userId, savedArticles } = useContext(AuthContext)
 
   const [articles, setArticles] = useState<savedArticleStructure[]>([])
   useEffect(() => {
     fetchSavedArticles(userId)
       .then((actualData) => setArticles(actualData));
     console.log(articles)
-  }, [])
+  }, [savedArticles])
   return (
     <div>SavedArticles:
       <br></br>
