@@ -1,35 +1,26 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../contexts/authContext';
 import StoryCard from './StoryCard';
 
 const SavedNews = () => {
     const { savedArticles } = useContext(AuthContext);
-    console.log(savedArticles);
-    Object.keys(savedArticles).forEach((art: any) => {
 
-    })
+    useEffect(() => {
+    }, [savedArticles]);
 
-    savedArticles.forEach((article: any) => {
-        console.log(article);
-        for (let propery in article) {
-            console.log(propery, "propery", article[propery]);
-        }
-    })
     return (
         <div>Saved Articles
-
-
-            {savedArticles.forEach((article: any) => {
-                console.log(article);
-                for (let propery in article) {
-                    console.log(propery, "propery", article[propery]);
-                    return (
-                        <StoryCard key={article.id} title={article[propery].title} link={article[propery].link} image={article[propery].image} />
-                    )
+            <>
+                {
+                    savedArticles.map((article: any) => {
+                        for (let propery in article) {
+                            return (
+                                <StoryCard key={propery} title={article[propery].title} link={article[propery].link} image={article[propery].image} />
+                            )
+                        }
+                    })
                 }
-            })}
-
-
+            </>
         </div>
     )
 }

@@ -4,8 +4,8 @@ import SavedNews from './SavedNews';
 const NewsHome = () => {
     return (
         <div>NewsHome
-            {/* <NewsCategory category='technology' /> */}
-            {/* <NewsCategory category='finance' /> */}
+            <NewsCategory category='technology' />
+            <NewsCategory category='finance' />
             <SavedNews />
         </div>
     )

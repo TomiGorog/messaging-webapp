@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { AuthContext } from '../contexts/authContext'
 
 type StoryCardProps = {
@@ -15,7 +15,7 @@ const StoryCard = ({ title, link, image }: StoryCardProps) => {
 
                 {image && <img src={image} alt={title} />}
                 <h3>{title}</h3>
-                <a href={link} target="_blank" rel="noopener noreferrer">{link}</a>
+                <a href={link} target="_blank" >{link}</a>
                 <button onClick={() => saveArticle({ title, link, image })}>Save</button>
             </div>
 

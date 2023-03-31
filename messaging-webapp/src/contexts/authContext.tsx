@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }: IElement) => {
     const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
-        console.log("useEffect");
         (async () => {
             await onAuthStateHasChanged(setSession, setLoggedIn)
             fetch(`${import.meta.env.VITE_DATABASEURL}/users/${session.userId}/savedArticles.json`)
@@ -44,7 +43,6 @@ export const AuthProvider = ({ children }: IElement) => {
                     articles && Object.keys(articles).forEach((article: string) => {
                         articleArray.push({ [article]: { ...articles[article] } })
                     });
-                    console.log(articleArray, "articleArray")
                     setSavedArticles(articleArray)
                 })
         })()
@@ -91,24 +89,13 @@ export const AuthProvider = ({ children }: IElement) => {
 
         let articleID = UUID.genV4();
         let aId = articleID.hexNoDelim
-        savedArticles.push({
-            [aId]: {
-                title: title,
-                link: link,
-                image: image
-            }
-        }
-        )
-        console.log(savedArticles)
+        let articleToSave = { [aId]: { title, link, image } }
+        setSavedArticles(prev => [...prev, articleToSave])
         return await set(ref(database, `users/${session.userId}/savedArticles/${articleID}`), {
             title: title,
             link: link,
             image: image
         })
-
-
-
-
     }
     return (
         <AuthContext.Provider value={{

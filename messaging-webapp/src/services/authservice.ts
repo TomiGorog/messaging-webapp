@@ -1,7 +1,6 @@
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 import { FirebaseAuth } from '../firebase/config'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { async } from 'rxjs';
 
 interface PropsRegister { email: string, password: string }
 
@@ -40,7 +39,6 @@ export const onAuthStateHasChanged = async (setSession: StateDispatch, setLogged
 
         setSession({ status: 'authenticated', userId: user!.uid })
         setLoggedIn(true)
-        console.log(user, "authenticated")
 
     })
 }
