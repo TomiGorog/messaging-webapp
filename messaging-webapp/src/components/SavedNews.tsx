@@ -14,9 +14,8 @@ const SavedNews = () => {
                 {
                     savedArticles.map((article: any) => {
                         for (let property in article) {
-                            console.log(property)
                             return (
-                                <SavedNewsCard articleId={property} title={article[property].title} link={article[property].link} image={article[property].image} />
+                                <SavedNewsCard key={property} articleId={property} title={article[property].title} link={article[property].link} image={article[property].image} />
                             )
                         }
                     })
