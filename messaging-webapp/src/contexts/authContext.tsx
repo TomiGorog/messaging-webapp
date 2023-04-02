@@ -1,11 +1,10 @@
 import { createContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signUpWithCredentials } from "../services/authservice"
 import { savedArticleCorrect, savedArticleStructure } from "../interfaces"
 import { set, ref } from "firebase/database"
 import { UUID } from "uuidjs"
 import { database } from "../firebase/config"
-import { fetchSavedArticles } from "../services/fetchService"
+
 export interface AuthStateContext {
     userId: string | null
     status: 'checking' | 'authenticated' | 'no-authenticated'
@@ -14,6 +13,7 @@ export interface AuthStateContext {
     handleLogOut: () => Promise<void>
     savedArticles: savedArticleCorrect[],
     saveArticle: (article: savedArticleStructure) => Promise<void>
+    deleteFromSavedArticles: (userId: string | null, articleId: string) => Promise<void>
 }
 
 const initialState: Pick<AuthStateContext, 'status' | 'userId'> = {
@@ -97,6 +97,15 @@ export const AuthProvider = ({ children }: IElement) => {
             image: image
         })
     }
+
+    const deleteFromSavedArticles = async (userId: string | null, articleId: string) => {
+        setSavedArticles(prev => [...prev.filter(a => a[articleId] == null)])
+        return await fetch(`${import.meta.env.VITE_DATABASEURL}/users/${userId}/savedArticles/${articleId}.json`, {
+            method: "DELETE"
+        }).then(resp => {
+            console.log(resp)
+        })
+    }
     return (
         <AuthContext.Provider value={{
             ...session,
@@ -105,6 +114,7 @@ export const AuthProvider = ({ children }: IElement) => {
             handleLogOut,
             savedArticles,
             saveArticle,
+            deleteFromSavedArticles
         }}>
             {children}
         </AuthContext.Provider>

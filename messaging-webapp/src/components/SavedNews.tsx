@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { AuthContext } from '../contexts/authContext';
-import StoryCard from './StoryCard';
+import SavedNewsCard from './SavedNewsCard';
 
 const SavedNews = () => {
     const { savedArticles } = useContext(AuthContext);
@@ -13,9 +13,10 @@ const SavedNews = () => {
             <>
                 {
                     savedArticles.map((article: any) => {
-                        for (let propery in article) {
+                        for (let property in article) {
+                            console.log(property)
                             return (
-                                <StoryCard key={propery} title={article[propery].title} link={article[propery].link} image={article[propery].image} />
+                                <SavedNewsCard articleId={property} title={article[property].title} link={article[property].link} image={article[property].image} />
                             )
                         }
                     })
