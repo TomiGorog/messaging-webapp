@@ -5,7 +5,7 @@ const NewsHome = () => {
     return (
         <div>NewsHome
             <NewsCategory category='technology' />
-            <NewsCategory category='finance' />
+            {/*  <NewsCategory category='finance' /> */}
             <SavedNews />
         </div>
     )

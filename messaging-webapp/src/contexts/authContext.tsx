@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signUpWithCredentials } from "../services/authservice"
-import { savedArticleCorrect, savedArticleStructure } from "../interfaces"
+import { articleToSave, savedArticleCorrect, } from "../interfaces"
 import { set, ref } from "firebase/database"
 import { UUID } from "uuidjs"
 import { database } from "../firebase/config"
@@ -12,7 +12,7 @@ export interface AuthStateContext {
     handleRegisterWithCredentials: (password: string, email: string) => Promise<boolean>
     handleLogOut: () => Promise<void>
     savedArticles: savedArticleCorrect[],
-    saveArticle: (article: savedArticleStructure) => Promise<void>
+    saveArticle: (article: articleToSave) => Promise<void>
     deleteFromSavedArticles: (userId: string | null, articleId: string) => Promise<void>
 }
 
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }: IElement) => {
         return validateAuth(userId)
     }
 
-    const saveArticle = async ({ title, link, image, }: savedArticleStructure) => {
+    const saveArticle = async ({ title, link, image, description }: articleToSave) => {
 
         let articleID = UUID.genV4();
         let aId = articleID.hexNoDelim
@@ -94,7 +94,8 @@ export const AuthProvider = ({ children }: IElement) => {
         return await set(ref(database, `users/${session.userId}/savedArticles/${articleID}`), {
             title: title,
             link: link,
-            image: image
+            image: image,
+            description: description
         })
     }
 

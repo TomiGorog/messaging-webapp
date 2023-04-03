@@ -1,9 +1,9 @@
-export interface savedArticleStructure {
+export interface articleToSave {
     title: string,
     link: string,
-    image?: string | undefined | null,
+    image?: string | null,
     userId?: string | null
-    articleId?: string
+    description: string,
 }
 
 export interface savedArticleCorrect {

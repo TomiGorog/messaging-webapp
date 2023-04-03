@@ -8,13 +8,14 @@ const NewsCategory = ({ category }: Props) => {
     const [news, setNews] = useState<any>(null);
     useEffect(() => {
         fetchCategoryData("technology", setNews)
+        console.log(news)
     }, [])
     return (
         <div>{category} news
             {news &&
                 <ul >
                     {news.results.map((story: any, index: number) => {
-                        return <StoryCard key={index} title={story.title} link={story.link} image={story.image_url} ></StoryCard>
+                        return <StoryCard key={index} title={story.title} link={story.link} image={story.image_url} description={story.description}></StoryCard>
 
                     })}
                 </ul>
