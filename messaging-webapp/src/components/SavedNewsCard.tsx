@@ -7,7 +7,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { readArticle } from '../services/generalService';
+import { createTheme } from "@mui/material"
+import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
+import ShareIcon from '@mui/icons-material/ShareOutlined';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+const theme = createTheme({
+
+});
 
 type newsCardProps = {
     title: string,
@@ -28,14 +34,14 @@ const SavedNewsCard = ({
 
     return (
         <Grid item xs={3}>
-            <Card sx={{ maxWidth: 345, }}>
+            <Card sx={{ maxWidth: 380, minHeight: 600, maxHeight: 600, border: 2 }}>
                 <CardMedia sx={{ height: 140 }} image={image} title={title}
                 >  </CardMedia>
-                <CardContent >
-                    <Typography gutterBottom variant="h5">
+                <CardContent sx={{ height: 350, marginBottom: 2 }}>
+                    <Typography gutterBottom variant="h6" component="h3">
                         {title}
                     </Typography>
-                    <Typography sx={{ overflow: 'hidden', maxHeight: 250 }} variant="body2" color="text.secondary">
+                    <Typography sx={{ overflow: 'hidden', height: 200 }} variant="body2" color="text.secondary">
 
                         {description}
                     </Typography>
@@ -48,8 +54,8 @@ const SavedNewsCard = ({
                     ></Link>
                     <Link component="button" href="#"
                         variant="body2" underline='hover' target="_blank" color="primary" rel="noreferrer noreferrer"
-                    >Share</Link>
-                    <Button size="small" variant="outlined" onClick={() => deleteFromSavedArticles(userId, articleId)} >Remove</Button>
+                    ><ShareIcon ></ShareIcon></Link>
+                    <Button size="small" onClick={() => deleteFromSavedArticles(userId, articleId)} ><DeleteIcon fontSize="large"></DeleteIcon></Button>
                 </CardActions>
             </Card>
         </Grid>
