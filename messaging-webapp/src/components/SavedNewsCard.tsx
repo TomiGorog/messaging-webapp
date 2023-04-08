@@ -30,14 +30,8 @@ const SavedNewsCard = ({
 }: newsCardProps) => {
 
     const { deleteFromSavedArticles, userId } = useContext(AuthContext)
-    useEffect(() => {
-        if (image == null || image == undefined || image == "") {
-            fetch(`https://pixabay.com/api/?key=${import.meta.env.VITE_PIXABAY_API_KEY}&q=query`)
-                .then(res => res.json())
-                .then(res => console.log(res))
-        }
-    },
-        [])
+
+
     return (
         <Grid item xs={3}>
             <Card sx={{ maxWidth: 400, minHeight: 600, maxHeight: 600, border: 2 }}>
@@ -55,10 +49,9 @@ const SavedNewsCard = ({
                     display: 'flex',
                     justifyContent: 'space-evenly',
                 }}>
-                    <Link href={link} target="_blank" >Read more</Link>
-                    <Link component="button" href={link}
+                    <Link fontSize="1rem" component="button" href={link}
                         variant="body2" underline='hover' target="_blank" color="primary" rel="noreferrer noreferrer"
-                    ></Link>
+                    >Read more</Link>
                     <Link component="button" href="#"
                         variant="body2" underline='hover' target="_blank" color="primary" rel="noreferrer noreferrer"
                     ><ShareIcon ></ShareIcon></Link>
