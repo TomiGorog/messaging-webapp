@@ -48,14 +48,15 @@ const SavedNewsCard = ({
                 <CardActions sx={{
                     display: 'flex',
                     justifyContent: 'space-evenly',
+                    alignItems: 'center'
                 }}>
-                    <Link fontSize="1rem" component="button" href={link}
-                        variant="body2" underline='hover' target="_blank" color="primary" rel="noreferrer noreferrer"
-                    >Read more</Link>
+                    <Button size="small" onClick={() => deleteFromSavedArticles(userId, articleId)} ><DeleteIcon fontSize="large"></DeleteIcon></Button>
                     <Link component="button" href="#"
                         variant="body2" underline='hover' target="_blank" color="primary" rel="noreferrer noreferrer"
-                    ><ShareIcon ></ShareIcon></Link>
-                    <Button size="small" onClick={() => deleteFromSavedArticles(userId, articleId)} ><DeleteIcon fontSize="large"></DeleteIcon></Button>
+                    ><ShareIcon fontSize="large" ></ShareIcon></Link>
+                    <Link fontSize="1.2rem" component="button" href={link}
+                        variant="body2" underline='hover' target="_blank" color="primary" rel="noreferrer noreferrer"
+                    >Read more</Link>
                 </CardActions>
             </Card>
         </Grid>
