@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import { createTheme } from "@mui/material"
 import ShareIcon from '@mui/icons-material/ShareOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import typewriter from '../assets/images/typewriter.jpg'
+
 const theme = createTheme({
 
 });
@@ -35,7 +37,7 @@ const SavedNewsCard = ({
     return (
         <Grid item xs={3}>
             <Card sx={{ maxWidth: 400, minHeight: 600, maxHeight: 600, border: 2 }}>
-                <CardMedia sx={{ height: 140 }} image={image} title={title}
+                <CardMedia sx={{ height: 140 }} image={image ? image : typewriter} title={title}
                 >  </CardMedia>
                 <CardContent sx={{ height: 350, marginBottom: 4, overflow: 'hidden' }}>
                     <Typography gutterBottom variant="h6" component="h3">

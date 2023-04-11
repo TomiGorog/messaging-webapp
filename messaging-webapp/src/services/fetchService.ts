@@ -38,27 +38,3 @@ export const fetchSavedArticles = async (userId: string | null) => {
         })
 }
 
-export const findAlternativeImage = async (country: string) => {
-    const capitalized = capitalizeWords(country)
-    console.log(capitalized)
-    return await fetch(`https://flagcdn.com/en/codes.json`)
-        .then(res => res.json())
-        .then((res: any) => {
-            let alternative = "";
-            Object.keys(res).forEach((key: string) => {
-
-                if (res[key] == capitalized) {
-                    alternative = key
-                }
-            })
-            return alternative
-        })
-
-}
-
-function capitalizeWords(str: string) {
-    if (str == "United States of America") {
-        str = "United States"
-    }
-    return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-}

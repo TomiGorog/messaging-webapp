@@ -4,7 +4,6 @@ export interface articleToSave {
     image?: string | null,
     userId?: string | null
     description: string,
-    country: string,
 }
 
 export interface savedArticleCorrect {

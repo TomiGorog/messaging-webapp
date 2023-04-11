@@ -20,7 +20,7 @@ const NewsCategory = ({ category }: Props) => {
             {news &&
                 <ul >
                     {news.slice(startIndex, startIndex + 5).map((story: any, index: number) => {
-                        return <StoryCard key={index} title={story.title} link={story.link} image={story.image_url} description={story.description} country={story.country}></StoryCard>
+                        return <StoryCard key={index} title={story.title} link={story.link} image={story.image_url} description={story.description}></StoryCard>
 
                     })}
                 </ul>
