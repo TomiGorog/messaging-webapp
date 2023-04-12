@@ -35,11 +35,30 @@ const SavedNewsCard = ({
 
 
     return (
-        <Grid item xs={3}>
-            <Card sx={{ maxWidth: 400, minHeight: 600, maxHeight: 600, border: 2 }}>
+        <Grid item spacing={0} sx={{
+            padding: 0,
+            marginBottom: 3,
+            marginTop: 3,
+            width: {
+                xs: 1,
+                sm: 0.45,
+                md: 0.25
+            },
+            display: 'flex',
+            flexWrap: 'nowrap',
+            justifyContent: 'center',
+        }}>
+            <Card sx={{
+                maxWidth: {
+                    xs: 0.9,
+                    padding: 0
+                },
+                width: 1
+
+            }}>
                 <CardMedia sx={{ height: 140 }} image={image ? image : typewriter} title={title}
                 >  </CardMedia>
-                <CardContent sx={{ height: 350, marginBottom: 4, overflow: 'hidden' }}>
+                <CardContent sx={{ height: 325, marginBottom: 4, overflow: 'hidden' }}>
                     <Typography gutterBottom variant="h6" component="h3">
                         {title}
                     </Typography>
@@ -61,7 +80,7 @@ const SavedNewsCard = ({
                     >Read more</Link>
                 </CardActions>
             </Card>
-        </Grid>
+        </Grid >
     )
 }
 

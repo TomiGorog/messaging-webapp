@@ -19,13 +19,13 @@ import { ScopedCssBaseline, ThemeProvider, createTheme } from '@mui/material'
 // });
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ScopedCssBaseline>
-      {/* <ThemeProvider theme={theme}> */}
-      <AuthProvider>
-        <Navigation />
-        <App />
-      </AuthProvider>
-      {/* </ThemeProvider> */}
-    </ScopedCssBaseline>
+    {/* <ScopedCssBaseline> */}
+    {/* <ThemeProvider theme={theme}> */}
+    <AuthProvider>
+      {/* <Navigation /> */}
+      <App />
+    </AuthProvider>
+    {/* </ThemeProvider> */}
+    {/* </ScopedCssBaseline> */}
   </React.StrictMode>,
 )
