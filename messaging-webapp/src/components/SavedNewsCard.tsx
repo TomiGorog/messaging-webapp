@@ -35,7 +35,7 @@ const SavedNewsCard = ({
 
 
     return (
-        <Grid item spacing={0} sx={{
+        <Grid item sx={{
             padding: 0,
             marginBottom: 3,
             marginTop: 3,

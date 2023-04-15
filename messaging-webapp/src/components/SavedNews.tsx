@@ -8,26 +8,26 @@ const SavedNews = () => {
     const { savedArticles } = useContext(AuthContext);
     const [startIndex, setStartIndex] = useState(0);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    let sliceMeasure = window.innerWidth
-    useEffect(() => {
-    }, [savedArticles]);
+    const [sliceMeasure, setSliceMeasure] = useState(1)
+    const [correctSlice, setCorrectSlice] = useState<any>()
 
     useEffect(() => {
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
             if (window.innerWidth < 599) {
-                sliceMeasure = 1
+                setSliceMeasure(1)
             } else if (window.innerWidth < 899) {
-                sliceMeasure = 2
+                setSliceMeasure(2)
             } else {
-                sliceMeasure = 5
+                setSliceMeasure(4)
             }
-            console.log(sliceMeasure)
         }
-        console.log(sliceMeasure)
+        handleResize()
         window.addEventListener('resize', handleResize);
+        let correctSlice = savedArticles.slice(startIndex, startIndex + sliceMeasure)
+        setCorrectSlice(correctSlice)
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [sliceMeasure, savedArticles, startIndex]);
     return (
         <Container disableGutters
             sx={{
@@ -43,7 +43,7 @@ const SavedNews = () => {
 
             }}>
                 {
-                    savedArticles.slice(startIndex, startIndex + sliceMeasure).map((article: any) => {
+                    correctSlice && correctSlice.map((article: any) => {
                         for (let property in article) {
                             return (
                                 <SavedNewsCard key={property} articleId={property} title={article[property].title} link={article[property].link} image={article[property].image} description={article[property].description} />
@@ -53,10 +53,12 @@ const SavedNews = () => {
                 }
             </Grid>
             <button onClick={() => {
-
-
-                setStartIndex(startIndex + sliceMeasure);
-            }}>Arrow next {windowWidth}</button>
+                savedArticles.length > startIndex + sliceMeasure && setStartIndex(startIndex + sliceMeasure);
+            }}>Arrow next  startindex: {startIndex} slicemeasure: {sliceMeasure}</button>
+            <button onClick={() => {
+                startIndex - sliceMeasure >= 0 && setStartIndex(startIndex - sliceMeasure);
+            }}>Arrow back {windowWidth}</button>
+            <p>saved articles length{savedArticles.length} </p>
         </Container >
     )
 }
