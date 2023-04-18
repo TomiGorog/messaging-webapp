@@ -6,7 +6,6 @@ const NewsHome = () => {
         <div>NewsHome
             <NewsCategory category='technology' />
             {/*  <NewsCategory category='finance' /> */}
-            <SavedNews />
         </div>
     )
 }

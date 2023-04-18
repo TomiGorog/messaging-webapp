@@ -15,7 +15,7 @@ function App() {
   if (status === 'checking') return <p className="loading"><span>Checking credentials, wait a moment...</span></p>
 
   return (
-    <BrowserRouter>
+    <>
       <Routes>
         <Route path="/" element={status === 'authenticated' && userId ? <NewsHome /> : <AuthPage />} />
         <Route element={<ProtectedRoutes />} >
@@ -23,7 +23,7 @@ function App() {
           <Route path="/saved" element={<SavedNews />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 

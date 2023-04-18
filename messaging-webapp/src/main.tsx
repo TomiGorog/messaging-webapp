@@ -4,7 +4,7 @@ import App from './App'
 import Navigation from './components/Navigation'
 import { AuthProvider } from './contexts/authContext'
 import './index.css'
-import { ScopedCssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import { BrowserRouter } from 'react-router-dom'
 
 
 // const theme = createTheme({
@@ -18,14 +18,16 @@ import { ScopedCssBaseline, ThemeProvider, createTheme } from '@mui/material'
 //   },
 // });
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  <>
     {/* <ScopedCssBaseline> */}
     {/* <ThemeProvider theme={theme}> */}
-    <AuthProvider>
-      {/* <Navigation /> */}
-      <App />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <Navigation />
+        <App />
+      </AuthProvider>
+    </BrowserRouter>
     {/* </ThemeProvider> */}
     {/* </ScopedCssBaseline> */}
-  </React.StrictMode>,
+  </>
 )
