@@ -3,6 +3,9 @@ import { AuthContext } from '../contexts/authContext';
 import SavedNewsCard from './SavedNewsCard';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import IconButton from '@mui/material/IconButton';
 
 const SavedNews = () => {
     const { savedArticles } = useContext(AuthContext);
@@ -26,8 +29,11 @@ const SavedNews = () => {
         window.addEventListener('resize', handleResize);
         let correctSlice = savedArticles.slice(startIndex, startIndex + sliceMeasure)
         setCorrectSlice(correctSlice)
+
+        console.log(startIndex - sliceMeasure)
         return () => window.removeEventListener('resize', handleResize);
     }, [sliceMeasure, savedArticles, startIndex]);
+
     return (
         <Container disableGutters
             sx={{
@@ -39,9 +45,17 @@ const SavedNews = () => {
             <Grid container spacing={0} sx={{
                 backgroundColor: "red",
                 justifyContent: "center",
+                alignItems: "center",
                 minWidth: 1,
+                flexWrap: "nowrap"
 
             }}>
+                <IconButton color='primary' disabled={startIndex - sliceMeasure < 0} onClick={() => {
+                    setStartIndex(startIndex - sliceMeasure);
+                }}>
+                    <ArrowBackIosNewIcon sx={{
+                    }} fontSize='large' ></ArrowBackIosNewIcon>
+                </IconButton>
                 {
                     correctSlice && correctSlice.map((article: any) => {
                         for (let property in article) {
@@ -51,13 +65,14 @@ const SavedNews = () => {
                         }
                     })
                 }
+                <IconButton color='primary' disabled={savedArticles.length <= startIndex + sliceMeasure} onClick={() => {
+                    setStartIndex(startIndex + sliceMeasure);
+                }}>
+                    <ArrowForwardIosIcon fontSize='large' ></ArrowForwardIosIcon>
+                </IconButton>
             </Grid>
-            <button onClick={() => {
-                savedArticles.length > startIndex + sliceMeasure && setStartIndex(startIndex + sliceMeasure);
-            }}>Arrow next  startindex: {startIndex} slicemeasure: {sliceMeasure}</button>
-            <button onClick={() => {
-                startIndex - sliceMeasure >= 0 && setStartIndex(startIndex - sliceMeasure);
-            }}>Arrow back {windowWidth}</button>
+
+
             <p>saved articles length{savedArticles.length} </p>
         </Container >
     )

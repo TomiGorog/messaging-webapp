@@ -40,9 +40,9 @@ const SavedNewsCard = ({
             marginBottom: 3,
             marginTop: 3,
             width: {
-                xs: 1,
+                xs: 0.8,
                 sm: 0.45,
-                md: 0.25
+                md: 0.225
             },
             display: 'flex',
             flexWrap: 'nowrap',
